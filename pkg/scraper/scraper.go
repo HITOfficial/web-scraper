@@ -9,8 +9,7 @@ import (
 	website "github.com/hitofficial/web-scraper/pkg/website"
 )
 
-// import Website from package in directory website
-
+// ScrapePage scrapes the page and counts the words using colly
 func ScrapePage(url string, result chan website.Website, wg *sync.WaitGroup) {
 	defer wg.Done()
 

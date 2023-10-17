@@ -25,6 +25,7 @@ func (h *MaxHeap) Pop() interface{} {
 	return x
 }
 
+// PopKLargestWordCounts pops k largest word counts from maxHeap
 func PopKLargestWordCounts(maxHeap *MaxHeap, k int) []WordCount {
 	KLargest := make(MaxHeap, 0)
 	amount := min(maxHeap.Len(), k)

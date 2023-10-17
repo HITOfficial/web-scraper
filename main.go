@@ -19,16 +19,20 @@ func main() {
 		"https://scrapeme.live/shop/page/3/",
 		"https://scrapeme.live/shop/page/4/",
 		"https://scrapeme.live/shop/page/5/",
-	}
-	k := 5
+	} // urls to scrape
+	k := 5                        // k is the number of most popular words
+	sem := make(chan struct{}, 3) // semaphore to limit the number of concurrent goroutines
 
 	results := make(chan website.Website)
 
 	var wg sync.WaitGroup
-
 	for _, url := range urls {
 		wg.Add(1)
-		go scraper.ScrapePage(url, results, &wg)
+		go func(url string) {
+			sem <- struct{}{}
+			defer func() { <-sem }()
+			go scraper.ScrapePage(url, results, &wg)
+		}(url)
 	}
 	go func() {
 		wg.Wait()
@@ -57,7 +61,6 @@ func main() {
 
 		for word, count := range v.Words {
 			entity, ok := words[word]
-			// gomega.Expect(website.Error).Should(gomega.BeNil())
 			if ok {
 				entity.Count += count
 				words[word] = entity
@@ -84,5 +87,5 @@ func main() {
 		utils.SummaryOfURL(urlSlice[i], errorSlice[i], k, &wc)
 	}
 	res := maxheap.PopKLargestWordCounts(globalMaxHeap, 5)
-	utils.SummaryOfURL("SUMMARY", nil, k, &res)
+	utils.SummaryOfURL("webistes summary", nil, k, &res)
 }

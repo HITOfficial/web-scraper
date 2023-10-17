@@ -6,6 +6,7 @@ import (
 	heap "github.com/hitofficial/web-scraper/pkg/heap"
 )
 
+// SpecialSignRemoval removes special signs from string
 func SpecialSignRemoval(r rune) rune {
 	specialSymbols := "!@#$%^&*()_-+={[}]\\|;:\"<>?/., "
 	for _, symbol := range specialSymbols {
@@ -16,6 +17,7 @@ func SpecialSignRemoval(r rune) rune {
 	return r
 }
 
+// SummaryOfURL prints summary of url
 func SummaryOfURL(url string, urlError error, k int, wc *[]heap.WordCount) {
 	fmt.Println("\n")
 	if urlError != nil {
