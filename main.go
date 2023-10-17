@@ -1,6 +1,5 @@
 package main
 
-// Heap to get k most polular items from results
 import (
 	"container/heap"
 	"sync"
@@ -56,10 +55,9 @@ func main() {
 			continue
 		}
 
-		// init empty heap
 		for word, count := range v.Words {
 			entity, ok := words[word]
-			// add to global counter
+			// gomega.Expect(website.Error).Should(gomega.BeNil())
 			if ok {
 				entity.Count += count
 				words[word] = entity
@@ -81,8 +79,6 @@ func main() {
 	for _, v := range words {
 		heap.Push(globalMaxHeap, v)
 	}
-
-	// Most common K words per URL
 	for i := 0; i < len(urlSlice); i++ {
 		wc := maxheap.PopKLargestWordCounts(&sliceOfWordCountHeap[i], k)
 		utils.SummaryOfURL(urlSlice[i], errorSlice[i], k, &wc)

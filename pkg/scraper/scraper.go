@@ -36,7 +36,6 @@ func ScrapePage(url string, result chan website.Website, wg *sync.WaitGroup) {
 	err := c.Visit(url)
 	if err != nil {
 		website.Error = err
-		return
 	}
 	result <- website
 }
